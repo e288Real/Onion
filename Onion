@@ -1,0 +1,156 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+local Window = Library.CreateLib("Onion 1.1", "DarkTheme")
+
+-- MAIN
+local Main = Window:NewTab("Main")
+local MainSection = Main:NewSection("Fun")
+
+
+MainSection:NewButton("Fly", "Makes you fly", function()
+  -- Press X to fly
+
+local plr = game.Players.LocalPlayer
+local mouse = plr:GetMouse()
+
+localplayer = plr
+
+if workspace:FindFirstChild("Core") then
+    workspace.Core:Destroy()
+end
+
+local Core = Instance.new("Part")
+Core.Name = "Core"
+Core.Size = Vector3.new(0.05, 0.05, 0.05)
+
+spawn(function()
+    Core.Parent = workspace
+    local Weld = Instance.new("Weld", Core)
+    Weld.Part0 = Core
+    Weld.Part1 = localplayer.Character.LowerTorso
+    Weld.C0 = CFrame.new(0, 0, 0)
+end)
+
+workspace:WaitForChild("Core")
+
+local torso = workspace.Core
+flying = true
+local speed=10
+local keys={a=false,d=false,w=false,s=false}
+local e1
+local e2
+local function start()
+    local pos = Instance.new("BodyPosition",torso)
+    local gyro = Instance.new("BodyGyro",torso)
+    pos.Name="EPIXPOS"
+    pos.maxForce = Vector3.new(math.huge, math.huge, math.huge)
+    pos.position = torso.Position
+    gyro.maxTorque = Vector3.new(9e9, 9e9, 9e9)
+    gyro.cframe = torso.CFrame
+    repeat
+        wait()
+        localplayer.Character.Humanoid.PlatformStand=true
+        local new=gyro.cframe - gyro.cframe.p + pos.position
+        if not keys.w and not keys.s and not keys.a and not keys.d then
+            speed=5
+        end
+        if keys.w then
+            new = new + workspace.CurrentCamera.CoordinateFrame.lookVector * speed
+            speed=speed+0
+        end
+        if keys.s then
+            new = new - workspace.CurrentCamera.CoordinateFrame.lookVector * speed
+            speed=speed+0
+        end
+        if keys.d then
+            new = new * CFrame.new(speed,0,0)
+            speed=speed+0
+        end
+        if keys.a then
+            new = new * CFrame.new(-speed,0,0)
+            speed=speed+0
+        end
+        if speed>10 then
+            speed=5
+        end
+        pos.position=new.p
+        if keys.w then
+            gyro.cframe = workspace.CurrentCamera.CoordinateFrame*CFrame.Angles(-math.rad(speed*0),0,0)
+        elseif keys.s then
+            gyro.cframe = workspace.CurrentCamera.CoordinateFrame*CFrame.Angles(math.rad(speed*0),0,0)
+        else
+            gyro.cframe = workspace.CurrentCamera.CoordinateFrame
+        end
+    until flying == false
+    if gyro then gyro:Destroy() end
+    if pos then pos:Destroy() end
+    flying=false
+    localplayer.Character.Humanoid.PlatformStand=false
+    speed=10
+end
+e1=mouse.KeyDown:connect(function(key)
+    if not torso or not torso.Parent then flying=false e1:disconnect() e2:disconnect() return end
+    if key=="w" then
+        keys.w=true
+    elseif key=="s" then
+        keys.s=true
+    elseif key=="a" then
+        keys.a=true
+    elseif key=="d" then
+        keys.d=true
+    elseif key=="x" then
+        if flying==true then
+            flying=false
+        else
+            flying=true
+            start()
+        end
+    end
+end)
+e2=mouse.KeyUp:connect(function(key)
+    if key=="w" then
+        keys.w=false
+    elseif key=="s" then
+        keys.s=false
+    elseif key=="a" then
+        keys.a=false
+    elseif key=="d" then
+        keys.d=false
+    end
+end)
+start()
+
+end)
+
+MainSection:NewButton("Silent Aim [DA HOOD]", "Aimbot BOI?!", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/bobobexz/sono-op/main/README.md", true))()
+
+end)
+
+MainSection:NewButton("OP FADED [DA HOOD]", "Aimbot BOI?!", function()
+    --Faded grid
+_G.Toggles = "V" -- You can put any keybind
+ loadstring(game:HttpGet("https://raw.githubusercontent.com/NighterEpic/Faded-Grid/main/YesEpic", true))()
+
+end)
+
+MainSection:NewButton("Bypasser [WORKING]", "swear?!", function()
+   --[[
+       _                        .x+=:.        s                                   .. 
+  u                        z`    ^%      :8                             x .d88"  
+ 88Nu.   u.                   .   <k    .88       .u    .                5888R   
+'88888.o888c       u        .@8Ned8"   :888ooo  .d88B :@8c        u      '888R   
+ ^8888  8888    us888u.   .@^%8888"  -*8888888 ="8888f8888r    us888u.    888R   
+  8888  8888 .@88 "8888" x88:  `)8b.   8888      4888>'88"  .@88 "8888"   888R   
+  8888  8888 9888  9888  8888N=*8888   8888      4888> '    9888  9888    888R   
+  8888  8888 9888  9888   %8"    R88   8888      4888>      9888  9888    888R   
+ .8888b.888P 9888  9888    @8Wou 9%   .8888Lu=  .d888L .+   9888  9888    888R   
+  ^Y8888*""  9888  9888  .888888P`    ^%888*    ^"8888*"    9888  9888   .888B . 
+    `Y"      "888*""888" `   ^"F        'Y"        "Y"      "888*""888"  ^*888%  
+              ^Y"   ^Y'                                      ^Y"   ^Y'     "%    
+                                                                                 
+Vastral V1. Thank you for using vastral!
+]]
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Xulaari/Vastral/main/Vastral.lua"))()
+ 
+end)
